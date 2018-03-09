@@ -1,0 +1,132 @@
+# mozctoroku ----  mozc ユーザ辞書登録 version 0.0.1 alpha
+
+かな漢字変換サーバ mozc のユーザ辞書への単語登録を行うためのプログ
+ラムです。
+Hideaki ABE さんが作成した `mozc-dict` プログラムが別途必要です。
+
+## 配布物の中身
+
+  - COPYING             GNU General Public License V2
+  - README              このファイルです。
+  - HISTORY             とりあえず更新履歴です
+  - mozctoroku.el       実際の辞書登録を行うプログラムです。
+  - mozctoroku-minibuf-menu.el
+                        ミニバッファにメニューを表示するための
+                        パッケージです。
+  - README.wxgtoroku    元となった wxgtoroku の README です。
+  - HISTORY.wxgtoroku   元となった wxgtoroku の更新履歴です
+
+## インストール方法
+
+  1. 手作業インストールでお願いします。	
+     配布物に含まれる mozctoroku.el と mozctoroku-minibuf-menu.el
+     を load-path の通ったディレクトリに置いてください。
+     お好みに応じて byte-compile しても良いでしょう。
+
+  2. ~/.emacs に以下の記述を追加してください。
+
+     ```lisp
+     (autoload 'mozctoroku-toroku "mozctoroku"
+               "mozc ユーザ辞書登録" t nil)
+     (autoload 'mozctoroku-toroku-region "mozctoroku"
+               "mozc ユーザ辞書登録" t nil)
+     ```
+
+     `mozctoroku-toroku-region` を追加すると関数名の補完の際に
+     `mozctoroku-toroku` と `mozctoroku-toroku-region` の両方にマッ
+     チします。`mozctoroku-toroku` は、リージョンがある場合には、
+     `mozctoroku-toroku-region` と同じ動作をしますので、
+     `mozctoroku-toroku-region` が必要でなければ２つ目の `autoload`
+     は削除してください。
+
+  3. 上記の２つでインストールは終了です。  
+     あとは `M-x mozctoroku-toroku` で単語をユーザ辞書に登録する
+     ことができるようになるはずです。
+
+## 使い方
+
+使い方は多分ノリでわかるとは思いますが一応書いておきます。
+
+まず、 `M-x mozctoroku-toroku` と実行します。
+    
+次に、辞書に登録する単語を聞いてきますので、入力してください。
+そのあとに単語の読みを聞いてきますので、これも入力します。
+この２つは通常のミニバッファで文字列を入力するのと同じキーが使える
+はずです。
+
+最後に辞書に登録する際の品詞を聞いてきますので、選択してください。
+品詞の選択には以下のキーが使えます。
+
+     C-g     キャンセル
+     Enter   項目を選択
+     C-a     左端の項目へ移動
+     C-e     右端の項目へ移動
+     C-b     一つ左の項目に移動
+     C-f     一つ右の項目に移動
+     C-p     前のメニューに移動
+     C-n     次のメニューに移動
+        
+最後の 2 つは意味がわかりにくいとは思うのですが、メニューの表示は
+4 つずつになってます。これはできる限り一度に表示できるようにしたかっ
+たからなんです。それで項目数が 5 つをこえる場合に項目を切り替える
+のに最後の 2 つを利用します。
+
+あと、数字キーを押すことで、アイテムを選択(実際にはEnterを押す必要
+があります)することができます。
+
+### 複数のユーザ辞書を使う場合
+
+まだインプリメントしていません。
+
+### mozc-dict にパスが通っていない場合
+
+mozc-dict にパスが通っていない場合には
+mozctoroku-mozc-dict-command に mozc-dict の位置を指定してください。
+
+```lisp
+(setq mozctoroku-toroku-mozc-dict-command "/usr/bin/mozc-dict")	
+```
+
+### その他の設定について
+
+以下の変数で動作を多少変えることができます。
+
+  - `mozctoroku-logfile`  
+    単語登録する際にログを保存するファイル名を指定します。 nil の
+    場合にはログを残しません。現在のデフォルトは nil です。
+
+  - `mozctoroku-minibuf-menu-subitem-size`__
+    ミニバッファにメニューを表示する際に一度に表示する項目数です。
+
+## 作成環境 / 動作確認
+
+`mozctoroku.el` 、 `mozctoroku-minibuf-menu.el` は emacs 25.3 の環
+境で作成しました。
+
+  + 動作確認をした環境
+    - emacs 25.3 on termux at Gemini PDA
+
+## わかっているバグ
+
+今のところありません。
+    
+## 著作権と責任の放棄
+
+配布条件は GNU General Public License V2 に従います。詳細は同封の
+`COPYING` を参照してください。
+
+## 一次配布元とバグ報告について
+
+github の http://github.com/amuramatsu/mozctoroku で配布します。
+
+バグ報告は github の issue に登録お願いします。できる限り修正した
+いと思います。ご迷惑となると思いますので、 wxgtoroku 原作者には報
+告しないでください。
+
+## Thanks to...
+
+wxgtoroku を作成、公開してくださった加藤さん、ありがとうございます。
+wxgtoroku の作成に関わってくださった方々にも感謝します。
+
+mozc-dict を作成した Hideaki ABE さんに感謝します。mozc-dict が無けれ
+ばこのプログラムは実現不可能でした。

@@ -1,0 +1,147 @@
+Version 0.02.13 beta 5     (2001/11/15)
+    * Emacs 21 で minibuffer の取り扱いが変更されているみたいなので、
+      それに合わせて wxg-minibuf-menu.el を修正。
+
+Version 0.02.13 beta 4     (2001/07/12)
+    * canna-without-newline や mode-line-canna-mode などの記述を
+      間違えていたのを鐘築さんに教えてもらったので修正。
+
+Version 0.02.13 beta 3     (2001/06/25)
+    * Tamago を使っている場合に、ミニバッファでもデフォルトで漢字変換が
+      on になるように修正
+    * 辞書からの単語の削除をサポートするための準備として、ユーザ辞書を
+      ダンプして、リストに変換する処理を実装
+    * リストにするだけじゃ寂しいので、結果を表示するためのモードを
+      でっち上げてみた。(何もできないので、とりあえずバージョンはそのまま)
+
+Version 0.02.13 beta 2     (2001/06/21)
+    * Egg-Remix を使うために、Tamago4 + canna-patch でも動作するように修正
+        - mode-line-canna-update の代わりにwxg-toroku-mode-line-mode-update
+          を使うように修正
+        - canna-without-newline の代わりに、wxg-toroku-without-newline を実装
+        - canna-reset がない場合は Tamago と仮定して、
+          canna-finalize-backend を呼ぶように修正
+    * wxg-toroku-region の処理で start > end の場合の処理を
+      値の交換で実装していたが、それだと問題が発生するようなので
+      引数の順番を変えるようにして対応
+    * wxgdic などのコマンド名を変数で指定できるように修正。nil の場合には
+      wxgdic というコマンド名を用いる。
+
+Version 0.02.13 beta        (2001/06/15)
+    * minibuf-menu まわりの関数名を wxg-minibuf-menu-*
+      の形へ変更。それにともなってファイル名の変更。
+    * README の修正
+
+Version 0.02.13 beta        (2001/06/08)
+    * UI の部分を canna-toroku にすこし近づけた．
+      具体的には read-japanese-string でのプロンプトの変更
+    * read-japanese-string で空の文字が入力された場合に
+      エラーメッセージを出すように修正
+
+Version 0.02.12 beta2       (2001/06/07)
+    * wxgdic にパスが通っていなくても使えるように
+      wxg-toroku-wxgdic-command 変数を追加
+      デフォルトの値は nil (その場合はパスが通っていると仮定する)
+
+Version 0.02.12 beta2       (2001/06/06)
+    * 栗山さんに split-string というものがあることを
+      教えていただいたので，wxg-toroku-parse-option-string を
+      削除して split-string に変更
+    * リージョン内に改行が含まれているかの判定のために wxg-toroku-region
+      で (< start end) となるように処理を追加
+    * 単語や読みの入力が空の場合に、読み直すように変更
+
+Version 0.02.12 beta        (2001/06/05)
+    * wxgdic を実行する際にオプションを渡せるように修正。
+      wxg-toroku-wxgdic-option-string の内容を引数として
+      wxgdic に渡すようにした。
+    * wxg-toroku-logfile にファイル名が指定されている場合に
+      登録した単語をログに残す(wxg-toroku-logfile で指定している
+      ファイルに)
+    * DOCSTRING の修正
+    * wxg-toroku-hinsi-list の宣言を defconst へ変更
+
+Version 0.02.11 beta        (2001/06/01)
+    * minibuffer からの日本語入力の部分を栗山さんから
+      教えて頂いた unwind-protect を使うコードに修正。
+    * また、単語の履歴を使えるようにするコードももらったので
+      そのように修正。
+    * unwind-protect を用いて、modeline の出力を変更するように
+      修正。それに伴って、read-japanse-string に hook を
+      追加して、modeline への描画が上書きされないようにした。
+
+Version 0.02.10 beta        (2001/05/30)
+    * 栗山さんから (word-at-point) と (current-word) を併用する
+      コードを送ってもらったので、そのように変更
+      (記号でも wxg-toroku-word-at-point で登録できるように)
+    * Emacs 20.x でのリージョンの存在の判定に mark-active を
+      利用するように変更
+    * なぜか minibuffer-exit-hook の部分をコメントアウト
+      していたので、コメントを外した。
+
+Version 0.02.9 beta2        (2001/05/15)
+    * 辞書登録の際に mode-line に [登録] と表示するように変更
+      ただし、\C-g でキャンセルすると、表示が残ってしまうので、
+      バージョンはあげていない... (^^;;
+
+Version 0.02.9 beta         (2001/05/13)
+    * 栗山さんから教えていただいた方法で canna-cursor への対応処理を
+      追加した。
+
+Version 0.02.8 beta2        (2001/05/08)
+    * 単語登録の際に wxg-toroku-word-at-point が non-nil の場合のみ
+      word-at-point を使うように修正
+
+Version 0.02.8 beta         (2001/05/03)
+    * 栗山さんに教えていただいた修正点を反映
+        すべての関数、変数に wxg-toroku をつけるように修正
+        Canna をロードしていた部分を修正
+        wxg-torokuでカーソル位置の単語を取り出すように修正
+        リージョン内に改行が含まれているかのチェック
+    * Emacs 20.x でリージョンを判定するために mark を使っていたが
+      問題が発生することがわかったので、Emacs 20.x ではリージョンの
+      判定をしないように修正した。
+
+Version 0.02.7 beta         (2001/05/02)
+    * インストールの作業を簡単にするために、Makefile を追加
+
+Version 0.02.7 beta         (2001/04/24)
+    * 高橋＠京大さんから複数のユーザ辞書を使えるようにするパッチを
+      いただいたので当てました。
+    * ユーザ辞書の指定時に ~/ といった表記を使えるように修正
+
+Version 0.02.6 beta         (2001/04/19)
+    * 品詞選択の際に数字キーでアイテムを選択できるように修正。
+
+Version 0.02.5 alpha        (2001/02/12)
+    * 田村さんに、品詞部分の間違いを教えて頂いたので修正。
+
+Version 0.02.4 alpha            (2001/01/24)
+    * 三輪＠PSTさんに、品詞部分の間違いを教えていたいただいたので修正。
+
+Version 0.02.3 alpha            (2001/01/20)
+    * 南＠東大さんに、パッチを頂いたので、それを当てました
+        - ミニバッファでの日本語入力部分の修正
+        - リージョンがあった場合に、それをデフォルトにする処理
+        - wxg-toroku-region 関数の追加
+    * Emacs 20.7 では region-exists-p がなかったので、XEmacs 以外の
+      時に定義するように修正しました。
+
+Version 0.02.2 alpha            (2001/01/17)
+    * 南＠東大さんに XEmacs で動くように修正してもらいました。
+    * 空白を含んだ単語を登録できるように、e言葉でおしえたいただいた
+      通りにダブルクォートで括るように修正
+
+Version 0.02.1 alpha            (2001/01/15)
+    * メニューの表示をちょっと修正。メニューの一部分しか表示されて
+      いないのがわかるように右端にメニューのどの部分を表示しているか
+      を示す数字を入れた。
+
+Version 0.02 alpha                      (2001/01/15)
+    * 単語登録の際にデフォルトでかな漢字変換を ON にするように修正
+
+Version 0.01 alpha                      (2001/01/12)
+    * とりあえず最低限の機能を実装
+        - ミニバッファへのメニュー機能
+        - wxgdic を使っての辞書への登録
+
